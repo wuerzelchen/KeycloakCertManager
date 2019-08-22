@@ -7,6 +7,8 @@ postgresql:
   service:
     port: 5432
 keycloak:
+  image:
+    tag: 6.0.1
   postgresql:
     postgresqlUsername: postgres
     postgresqlPassword: demopass
