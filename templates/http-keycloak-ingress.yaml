@@ -20,6 +20,6 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: {{ .Release.Name }}-http
+          serviceName: {{ include "keycloak.fullname" . }}-http
           servicePort: 8080
         path: /auth/(.*)
