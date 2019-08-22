@@ -1,0 +1,23 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: ClusterIssuer
+metadata:
+  {{- if .Values.cert.production }}
+  name: letsencrypt-prod
+  {{- else }}
+  name: letsencrypt-staging
+  {{- end }}
+spec:
+  acme:
+    {{- if .Values.cert.production }}
+    server: https://acme-v02.api.letsencrypt.org/directory
+    {{- else }}
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    {{- end }}
+    email: user@contoso.com
+    privateKeySecretRef:
+      {{- if .Values.cert.production }}
+      name: letsencrypt-prod
+      {{- else }}
+      name: letsencrypt-staging
+      {{- end }}
+    http01: {}

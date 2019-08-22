@@ -1,0 +1,73 @@
+postgresql:
+  persistence:
+    enabled: false
+  postgresqlUsername: postgres
+  postgresqlPassword: demopass
+  postgresqlDatabase: keycloak
+  service:
+    port: 5432
+keycloak:
+  postgresql:
+    postgresqlUsername: postgres
+    postgresqlPassword: demopass
+    postgresqlDatabase: keycloak
+    service:
+      port: 5432
+  keycloak:
+    username: wolfgang
+    password: wolfgang
+    persistence:
+      deployPostgres: true
+      dbVendor: postgres
+      #dbUser: keycloak
+      #dbPassword: demopass
+
+    service:
+      type: NodePort
+      port: 8080
+      #nodePort: 31013
+    extraEnv: |
+      - name: PROXY_ADDRESS_FORWARDING
+        value: "true"
+      - name: KEYCLOAK_HTTP_PORT
+        value: "8080"
+
+
+# Default values for certtest.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nginx-ingress:
+  controller:
+  #  name: nginx
+    service:
+      ports:
+        http: 8080
+      targetPorts:
+        http: 8080
+    containerPort:
+      http: 8080
+    nodeSelector:
+      beta.kubernetes.io/os: linux
+    autoscaling:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 10
+      targetCPUUtilizationPercentage: 50
+      targetMemoryUtilizationPercentage: 80
+    service:
+  #    enableHttp: true
+  #    enableHttps: true
+      type: LoadBalancer
+  #  metrics:
+  #    enabled: true
+    #headers: #--- relevant for ip logging in keycloak
+  defaultBackend:
+    service:
+      servicePort: 8080
+    nodeSelector:
+      beta.kubernetes.io/os: linux
+
+cert:
+  enabled: true
+  production: true
