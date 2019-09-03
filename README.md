@@ -3,7 +3,7 @@ Keycloak deployment with nginx TLS Termination and lets encrypt certificates
 
 To get this helm chart running, you only need to do a couple of things:
 
-1. install custom resource definitions: kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.8/deploy/manifests/00-crds.yaml
+1. install custom resource definitions: kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.9/deploy/manifests/00-crds.yaml
 2. helm init --history-max 200
 3. helm dependencies update
 4. add your hostname for the tls certificate to templates/http-keycloak-ingress.yaml
